@@ -1,7 +1,6 @@
 #include <gtk/gtk.h>
 
 static void destroy(GtkWidget*, gpointer);
-static gboolean delete_event(GtkWidget*, GdkEvent*, gpointer);
 
 int main(int argc, char *argv[]){
 	
@@ -15,7 +14,6 @@ int main(int argc, char *argv[]){
 	gtk_widget_set_size_request(window, 200, 100);
 	
 	g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(destroy), NULL);
-	g_signal_connect(G_OBJECT(window), "delete_event", G_CALLBACK(delete_event), NULL);
 	
 	label = gtk_label_new("Hello World");
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
@@ -30,8 +28,4 @@ int main(int argc, char *argv[]){
 
 static void destroy(GtkWidget *window, gpointer data){
 	gtk_main_quit();
-}
-
-static gboolean delete_event(GtkWidget *window, GdkEvent *event, gpointer data){
-	return FALSE;
 }
