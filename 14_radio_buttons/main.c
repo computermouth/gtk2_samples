@@ -31,7 +31,3 @@ int main(int argc, char *argv[]){
 	
 	return 0;
 }
-
-static void destroy(GtkWidget *window, gpointer data){
-	gtk_main_quit();
-}
