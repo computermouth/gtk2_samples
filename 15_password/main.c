@@ -1,8 +1,10 @@
 #include <gtk/gtk.h>
 
+static void highlight_all(GtkWidget*, GdkEvent*, gpointer);
+
 int main(int argc, char *argv[]){
 	
-	GtkWidget *window, *vbox, *hbox, *question, *label, *pass;
+	GtkWidget *window, *vbox, *hbox, *question, *label, *entry, *pass;
 	
 	gtk_init(&argc, &argv);
 	
@@ -16,6 +18,10 @@ int main(int argc, char *argv[]){
 	question = gtk_label_new(str);
 	label = gtk_label_new("Password:");
 	
+	entry = gtk_entry_new();
+	gtk_entry_set_text(GTK_ENTRY(entry), "untitled_000");
+	g_signal_connect(GTK_ENTRY(entry), "focus-in-event", G_CALLBACK(highlight_all), NULL);
+	
 	pass = gtk_entry_new();
 	gtk_entry_set_visibility(GTK_ENTRY(pass), FALSE);
 	gtk_entry_set_invisible_char(GTK_ENTRY(pass), '*');
@@ -27,6 +33,7 @@ int main(int argc, char *argv[]){
 	vbox = gtk_vbox_new(FALSE, 5);
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), question);
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), hbox);
+	gtk_box_pack_start_defaults(GTK_BOX(vbox), entry);
 	
 	gtk_container_add(GTK_CONTAINER(window), vbox);	
 	gtk_widget_show_all(window);
@@ -34,4 +41,12 @@ int main(int argc, char *argv[]){
 	gtk_main();
 	
 	return 0;
+}
+
+static void highlight_all(GtkWidget *widget, GdkEvent *event, gpointer data){
+	printf("ey\n");
+	//~ guint16 len = gtk_entry_get_text_length( GTK_ENTRY(widget));
+	
+	gtk_editable_select_region(GTK_EDITABLE(widget), 0, GTK_ENTRY(widget)->text_length);
+	
 }
